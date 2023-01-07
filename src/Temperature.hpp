@@ -1,6 +1,48 @@
-//
-// Created by niklas on 27.12.22.
-//
+/*!
+ * @file Temperature.hpp
+ *
+ * @mainpage
+ *
+ * @section intro_sec Introduction
+ *
+ * This is the documentation for the TemperatureLibrary for the Arduino
+ * platform. Because of the independence of Arduino libraries, it could be
+ * theoretically used for every C/C++ program.
+ * But the implemented sensors use different technologies for communication with
+ * the microcontroller. Therefore please read the documentation of each sensor,
+ * to check if the sensor is compatible with your microcontroller.
+ * The library can be used to compute temperatures into different units, to
+ * retrieve temperatures from different sensors and to write own implementation
+ * of temperature sensors.
+ *
+ *
+ * @section author Author
+ *
+ * Written by Niklas Kaaf (nkaaf@protonmail.com) with passion and the goal to
+ * provide a simple and well implemented basic structure for building great
+ * software.
+ *
+ * @section license License
+ *
+ * This file is part of the List library.
+ *
+ * Copyright (C) 2023  Niklas Kaaf
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ * USA
+ */
 
 #ifndef TEMPERATURE_LIBRARY_TEMPERATURE_HPP
 #define TEMPERATURE_LIBRARY_TEMPERATURE_HPP
