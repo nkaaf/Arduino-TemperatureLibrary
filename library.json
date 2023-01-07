@@ -38,6 +38,13 @@
       ]
     }
   ],
+  "dependencies": [
+    {
+      "owner": "nkaaf",
+      "name": "Regression",
+      "version": "1.0.1"
+    }
+  ],
   "export": {
     "include": [
       "examples/*",
