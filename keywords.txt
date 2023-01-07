@@ -1,0 +1,29 @@
+###########################################
+# Syntax Coloring Map For List
+###########################################
+
+###########################################
+# Datatypes (KEYWORD1)
+###########################################
+
+AVRInternalTemperatureSensor	KEYWORD1
+Temperature KEYWORD1
+TemperatureSensor   KEYWORD1
+Unit    KEYWORD1
+
+###########################################
+# Methods and Functions (KEYWORD2)
+###########################################
+
+init    KEYWORD2
+getDefaultUNit  KEYWORD2
+getTemperature  KEYWORD2
+saveState   KEYWORD2
+restoreState    KEYWORD2
+getTemperature  KEYWORD2
+getTemperatureString    KEYWORD2
+setTemperature  KEYWORD2
+getUnit KEYWORD2
+setUnit KEYWORD2
+getUnitString   KEYWORD2
+convertTo   KEYWORD2
