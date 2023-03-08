@@ -25,6 +25,14 @@
 
 #include "Temperature.hpp"
 
+#if defined(CHAR_PTR_STRING)
+#include "avr/pgmspace.h"
+
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#endif
+
 String Temperature::getTemperatureString() {
   return getTemperatureString(this->value, this->unit);
 }
@@ -38,9 +46,18 @@ String Temperature::getTemperatureString(Temperature::Unit unit) {
 }
 
 String Temperature::getTemperatureString(float value, Unit unit) {
+#if defined(CHAR_PTR_STRING)
+  int len = snprintf(nullptr, 0, "%f", value);
+  String unitString = getUnitString(unit);
+
+  auto string = (String)malloc(
+      sizeof(unsigned char) * strlen((char *)unitString) + 1 + len + 1);
+  sprintf((char *)string, "%f %s", value, (char *)&unitString);
+#else
   String string = String(value);
   string += F(" ");
   string += getUnitString(unit);
+#endif
   return string;
 }
 
@@ -58,6 +75,7 @@ void Temperature::setUnit(Temperature::Unit unit) {
 }
 
 String Temperature::getUnitString(Unit unit) {
+#if defined(ARDUINO)
   return unit == CELSIUS      ? F("°C")
          : unit == FAHRENHEIT ? F("°F")
          : unit == KELVIN     ? F("K")
@@ -67,6 +85,17 @@ String Temperature::getUnitString(Unit unit) {
          : unit == NEWTON     ? F("°N")
          : unit == ROMER      ? F("°Rø")
                               : F("");
+#else
+  return (String)(unit == CELSIUS      ? PSTR("°C")
+                  : unit == FAHRENHEIT ? PSTR("°F")
+                  : unit == KELVIN     ? PSTR("K")
+                  : unit == RANKINE    ? PSTR("°R")
+                  : unit == DELISLE    ? PSTR("°D")
+                  : unit == REAUMUR    ? PSTR("°R")
+                  : unit == NEWTON     ? PSTR("°N")
+                  : unit == ROMER      ? PSTR("°Rø")
+                                       : PSTR(""));
+#endif
 }
 
 float Temperature::convertTo(Unit unit) {

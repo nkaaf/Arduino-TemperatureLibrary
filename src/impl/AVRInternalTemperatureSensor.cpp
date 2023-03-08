@@ -25,6 +25,9 @@
 
 #include "AVRInternalTemperatureSensor.hpp"
 
+#include "stdlib.h"
+#include "avr/io.h"
+
 Linear2DRegression *AVRInternalTemperatureSensor::linearRegression =
     new Linear2DRegression();
 
@@ -32,9 +35,26 @@ AVRInternalTemperatureSensor::~AVRInternalTemperatureSensor() {
   free(this->stateStorage);
 }
 
-void AVRInternalTemperatureSensor::init() {
-  initRegression();
+void AVRInternalTemperatureSensor::init() { initRegression(); }
 
+void AVRInternalTemperatureSensor::initRegression() {
+#if defined(__AVR_ATmega48A__) || defined(__AVR_ATmega48PA__) ||               \
+    defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88PA__) ||               \
+    defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168PA__) ||             \
+    defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
+  /// Typical values according to datasheet
+  linearRegression->addPoint(242, -45);
+  linearRegression->addPoint(314, 25);
+  linearRegression->addPoint(380, 85);
+#elif defined(__AVR_ATtiny828__)
+  /// Typical values according to datasheet
+  linearRegression->addPoint(235, -40);
+  linearRegression->addPoint(300, 25);
+  linearRegression->addPoint(360, 85);
+#endif
+}
+
+float AVRInternalTemperatureSensor::getTemperature() {
 #if defined(__AVR_HAVE_PRR_PRADC)
   /// Shut down the Power Reduction ADC bit
   PRR |= (0 << PRADC);
@@ -59,26 +79,7 @@ void AVRInternalTemperatureSensor::init() {
   /// Wait until one conversion is finished (= initialization of the ADC)
   while ((ADCSRA & (1 << ADSC)) != 0) {
   }
-}
 
-void AVRInternalTemperatureSensor::initRegression() {
-#if defined(__AVR_ATmega48A__) || defined(__AVR_ATmega48PA__) ||               \
-    defined(__AVR_ATmega88A__) || defined(__AVR_ATmega88PA__) ||               \
-    defined(__AVR_ATmega168A__) || defined(__AVR_ATmega168PA__) ||             \
-    defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
-  /// Typical values according to datasheet
-  linearRegression->addPoint(242, -45);
-  linearRegression->addPoint(314, 25);
-  linearRegression->addPoint(380, 85);
-#elif defined(__AVR_ATtiny828__)
-  /// Typical values according to datasheet
-  linearRegression->addPoint(235, -40);
-  linearRegression->addPoint(300, 25);
-  linearRegression->addPoint(360, 85);
-#endif
-}
-
-float AVRInternalTemperatureSensor::getTemperature() {
   /// Activate ADC
   ADCSRA |= (1 << ADSC);
 

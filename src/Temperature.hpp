@@ -47,7 +47,15 @@
 #ifndef TEMPERATURE_LIBRARY_TEMPERATURE_HPP
 #define TEMPERATURE_LIBRARY_TEMPERATURE_HPP
 
+#if defined(ARDUINO)
 #include <WString.h>
+#else
+#if not(defined(CHAR_PTR_STRING))
+#define CHAR_PTR_STRING
+/** Type definition for an string. */
+typedef unsigned char *String;
+#endif
+#endif
 
 /*!
  * @brief   Class representing a temperature, but this also includes some static
@@ -94,6 +102,8 @@ public:
    * @brief Get the temperature as a string including the unit.
    *
    * @return The temperature as a string with the unit.
+   * @note  If NOT using the arduino framework, the returned pointer has to be
+   *        free'd with free() in order to prevent memory leaks.
    */
   String getTemperatureString();
 
@@ -102,6 +112,8 @@ public:
    *
    * @param unit    The unit that the output string should have.
    * @return The temperature as a string with the unit.
+   * @note  If NOT using the arduino framework, the returned pointer has to be
+   *        free'd with free() in order to prevent memory leaks.
    */
   String getTemperatureString(Unit unit);
 
@@ -111,6 +123,8 @@ public:
    * @param value   Value of the desired temperature string.
    * @param unit    Unit of the desired temperature string.
    * @return    The temperature including the unit as a string.
+   * @note  If NOT using the arduino framework, the returned pointer has to be
+   *        free'd with free() in order to prevent memory leaks.
    */
   static String getTemperatureString(float value, Unit unit);
 
