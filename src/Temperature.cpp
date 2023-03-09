@@ -55,7 +55,7 @@ String Temperature::getTemperatureString(float value, Unit unit) {
 
   auto string = (String)malloc(
       sizeof(unsigned char) * strlen((char *)unitString) + 1 + len + 1);
-  sprintf((char *)string, "%f %s", value, (char *)&unitString);
+  sprintf((char *)string, "%f %s", value, unitString);
 #else
   String string = String(value);
   string += F(" ");
