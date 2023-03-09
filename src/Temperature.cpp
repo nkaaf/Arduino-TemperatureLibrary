@@ -27,10 +27,13 @@
 
 #if defined(CHAR_PTR_STRING)
 #include <avr/pgmspace.h>
+#define F(s) ((String)PSTR(s))
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#else
+#include <Print.h>
 #endif
 
 String Temperature::getTemperatureString() {
@@ -75,7 +78,6 @@ void Temperature::setUnit(Temperature::Unit unit) {
 }
 
 String Temperature::getUnitString(Unit unit) {
-#if defined(ARDUINO)
   return unit == CELSIUS      ? F("°C")
          : unit == FAHRENHEIT ? F("°F")
          : unit == KELVIN     ? F("K")
@@ -85,17 +87,6 @@ String Temperature::getUnitString(Unit unit) {
          : unit == NEWTON     ? F("°N")
          : unit == ROMER      ? F("°Rø")
                               : F("");
-#else
-  return (String)(unit == CELSIUS      ? PSTR("°C")
-                  : unit == FAHRENHEIT ? PSTR("°F")
-                  : unit == KELVIN     ? PSTR("K")
-                  : unit == RANKINE    ? PSTR("°R")
-                  : unit == DELISLE    ? PSTR("°D")
-                  : unit == REAUMUR    ? PSTR("°R")
-                  : unit == NEWTON     ? PSTR("°N")
-                  : unit == ROMER      ? PSTR("°Rø")
-                                       : PSTR(""));
-#endif
 }
 
 float Temperature::convertTo(Unit unit) {
