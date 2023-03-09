@@ -26,11 +26,11 @@
 #include "Temperature.hpp"
 
 #if defined(CHAR_PTR_STRING)
-#include "avr/pgmspace.h"
+#include <avr/pgmspace.h>
 
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #endif
 
 String Temperature::getTemperatureString() {
