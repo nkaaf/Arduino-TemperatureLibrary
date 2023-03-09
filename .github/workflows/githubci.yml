@@ -4,6 +4,7 @@ on: [ pull_request, push, repository_dispatch ]
 
 jobs:
   build:
+    if: ${{ false }} # disable until ci-arduino update Arduino IDE version
     runs-on: ubuntu-latest
 
     steps:
